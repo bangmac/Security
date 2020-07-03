@@ -25,6 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 // Phương thức Override configure(HttpSecurity http) cấu hình bảo mật dựa trên web cho tất cả các yêu cầu HTTP. Theo mặc định,
 // nó sẽ được áp dụng cho tất cả các yêu cầu, nhưng có thể bị hạn chế bằng cách sử dụng requestMatcher () hoặc các phương thức tương tự khác.
         http.authorizeRequests().antMatchers("/").permitAll()
+// permitAll() cho phép tất cả các user đều được phép truy cập, nếu muốn đăng nhâp để truy cập sử dụng authenticated() thay permitAll()
 // Url '/' không được bảo mật và có thể được truy cập bởi bất kỳ ai.
                 .and()
                 .authorizeRequests().antMatchers("/user**").hasRole("USER")
@@ -34,6 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 // Bất kỳ URL nào bắt đầu bằng '/admin' đều được bảo mật và chỉ những người dùng nào có vai trò 'ADMIN' mới có thể truy cập được.
                 .and()
                 .formLogin()
+// Spring security sẽ tự động tạo form đăng nhập nếu ta không định nghĩa cho nó
+// Trong Spring security, trang xử lý submit form đăng nhập mặc định là /login
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
